@@ -10,28 +10,26 @@
   </head>
   <body>
     <section class="board">
-      <h1>BlackJack</h1>
-      <div class="boardTable">
-        <h2>Twoje Karty</h2>
-        <div class="playerCards">
-            <div class="card"></div>
-            <div class="card">10 &hearts;</div>
-            <div class="card"></div>
+        <header>
+            <h1>BlackJack</h1>
+        </header>
+        <div class="message"></div>
+        <div class="boardTable">
+            <h2>Twoje Karty:</h2>
+            <div class="playerCards"></div>
+            <h2>Karty Gracza:</h2>
+            <div class="dealerCards"></div>
         </div>
-        <h2>Karty Gracza</h2>
-        <div class="dealerCards">
-            <div class="card"></div>
-            <div class="card">10 &hearts;</div>
-            <div class="card"></div>
+        <div class="pointsContainer">
+            <p class="points1">Punkty Gracza: <span class="playerPoints"></span></p>
+            <p class="points2">Punkty Przeciwnika: <span class="enemyPoints"></span></p>
         </div>
-      </div>
-      <p class="playerPoints">Punkty Gracza</p>
-      <p class="enemyPoints">Punkty Przeciwnika</p>
-      <div class="buttons">
-        <button class="btn nextCard">Dobieram</button>
-        <button class="btn stand">Zostaję</button>
+        <div class="buttons">
+            <button class="btn nextCard">Dobieram</button>
+            <button class="btn stand">Zostaję</button>
         </button>
       </div>
     </section>
+    <script src="app/Game.js" type="module"></script>
   </body>
 </html>
