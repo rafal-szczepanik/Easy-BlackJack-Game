@@ -36,6 +36,9 @@ class Game {
     this.player.hand.addCard(card);
     this.table.showPlayerCard(card.render());
     this.playerPoints.innerHTML = this.player.calculatePoints();
+    if (this.player.points > 21) {
+      this.endGame();
+    }
   }
 
   dealCards() {
