@@ -2,6 +2,7 @@ import { Table } from "./Table.js";
 import { Player } from "./Player.js";
 import { Deck } from "./Deck.js";
 import { Message } from "./Message.js";
+import { Hand } from "./Hand.js";
 
 class Game {
   constructor({
@@ -67,12 +68,32 @@ class Game {
     }
     this.endGame();
   }
+
+  renderRestButton() {
+    const restartButton = document.createElement("button");
+    restartButton.classList.add("btn");
+    restartButton.textContent = "Nowa Gra";
+    document.querySelector(".buttons").appendChild(restartButton);
+    restartButton.addEventListener("click", (event) => {
+      document.querySelector(".buttons").removeChild(restartButton);
+      this.hitButton.style.display = "block";
+      this.stayButton.style.display = "block";
+      this.messageBox.hide();
+      const playerHand = document.querySelector(".playerCards");
+      const dealerHand = document.querySelector(".dealerCards");
+      playerHand.innerHTML = "";
+      dealerHand.innerHTML = "";
+      this.player.hand.cards = [];
+      this.dealer.hand.cards = [];
+      this.dealCards();
+    });
+  }
   endGame() {
     this.hitButton.removeEventListener("click", (event) => this.hitCard);
     this.stayButton.removeEventListener("click", (event) => this.dealerPlays);
-
     this.hitButton.style.display = "none";
     this.stayButton.style.display = "none";
+    this.renderRestButton();
 
     if (this.player.points < 21 && this.player.points === this.dealer.points) {
       this.messageBox.setText("Remis".show());
