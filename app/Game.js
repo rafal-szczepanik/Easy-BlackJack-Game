@@ -2,7 +2,6 @@ import { Table } from "./Table.js";
 import { Player } from "./Player.js";
 import { Deck } from "./Deck.js";
 import { Message } from "./Message.js";
-import { Hand } from "./Hand.js";
 
 class Game {
   constructor({
@@ -24,6 +23,7 @@ class Game {
     this.table = table;
     this.deck = new Deck();
     this.deck.shuffle();
+    this.run();
   }
 
   run() {
@@ -33,7 +33,7 @@ class Game {
   }
 
   hitCard() {
-    const card = this.deck.pickOne();
+    let card = this.deck.pickOne();
     this.player.hand.addCard(card);
     this.table.showPlayerCard(card.render());
     this.playerPoints.innerHTML = this.player.calculatePoints();
@@ -69,7 +69,7 @@ class Game {
     this.endGame();
   }
 
-  renderRestButton() {
+  renderResetButton() {
     const restartButton = document.createElement("button");
     restartButton.classList.add("btn");
     restartButton.textContent = "Nowa Gra";
@@ -79,12 +79,10 @@ class Game {
       this.hitButton.style.display = "block";
       this.stayButton.style.display = "block";
       this.messageBox.hide();
-      const playerHand = document.querySelector(".playerCards");
-      const dealerHand = document.querySelector(".dealerCards");
-      playerHand.innerHTML = "";
-      dealerHand.innerHTML = "";
-      this.player.hand.cards = [];
-      this.dealer.hand.cards = [];
+      this.playerPoints.innerHTML = 0;
+      this.dealerPoints.innerHTML = 0;
+      document.querySelector(".playerCards").innerHTML = "";
+      document.querySelector(".dealerCards").innerHTML = "";
       this.dealCards();
     });
   }
@@ -93,7 +91,11 @@ class Game {
     this.stayButton.removeEventListener("click", (event) => this.dealerPlays);
     this.hitButton.style.display = "none";
     this.stayButton.style.display = "none";
-    this.renderRestButton();
+    this.renderResetButton();
+    this.player.hand.cards = [];
+    this.dealer.hand.cards = [];
+    this.deck = new Deck();
+    this.deck.shuffle();
 
     if (this.player.points < 21 && this.player.points === this.dealer.points) {
       this.messageBox.setText("Remis".show());
@@ -132,4 +134,4 @@ const game = new Game({
   table,
   messageBox,
 });
-game.run();
+// game.run();
