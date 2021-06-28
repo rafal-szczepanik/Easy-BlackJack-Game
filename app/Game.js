@@ -12,9 +12,11 @@ class Game {
     playerPoints,
     dealerPoints,
     messageBox,
+    restartButton,
   }) {
     this.hitButton = hitButton;
     this.stayButton = stayButton;
+    this.restartButton = restartButton;
     this.playerPoints = playerPoints;
     this.dealerPoints = dealerPoints;
     this.messageBox = messageBox;
@@ -68,24 +70,25 @@ class Game {
     }
     this.endGame();
   }
-
-  renderResetButton() {
-    const restartButton = document.createElement("button");
-    restartButton.classList.add("btn");
-    restartButton.textContent = "Nowa Gra";
-    document.querySelector(".buttons").appendChild(restartButton);
-    restartButton.addEventListener("click", (event) => {
-      document.querySelector(".buttons").removeChild(restartButton);
-      this.hitButton.style.display = "block";
-      this.stayButton.style.display = "block";
-      this.messageBox.hide();
-      this.playerPoints.innerHTML = 0;
-      this.dealerPoints.innerHTML = 0;
-      document.querySelector(".playerCards").innerHTML = "";
-      document.querySelector(".dealerCards").innerHTML = "";
-      this.dealCards();
-    });
+  resetButton(event) {
+    document.querySelector(".buttons").removeChild(this.restartButton);
+    this.hitButton.style.display = "block";
+    this.stayButton.style.display = "block";
+    this.messageBox.hide();
+    this.playerPoints.innerHTML = 0;
+    this.dealerPoints.innerHTML = 0;
+    document.querySelector(".playerCards").innerHTML = "";
+    document.querySelector(".dealerCards").innerHTML = "";
+    this.dealCards();
   }
+  renderResetButton() {
+    this.restartButton = document.createElement("button");
+    this.restartButton.classList.add("btn");
+    this.restartButton.textContent = "Nowa Gra";
+    document.querySelector(".buttons").appendChild(this.restartButton);
+    this.restartButton.addEventListener("click", (event) => this.resetButton());
+  }
+
   endGame() {
     this.hitButton.removeEventListener("click", (event) => this.hitCard);
     this.stayButton.removeEventListener("click", (event) => this.dealerPlays);
@@ -128,6 +131,7 @@ const player = new Player("raf");
 const game = new Game({
   hitButton: document.querySelector(".nextCard"),
   stayButton: document.querySelector(".stand"),
+  restartButton: document.querySelector(".btn"),
   playerPoints: document.querySelector(".playerPoints"),
   dealerPoints: document.querySelector(".enemyPoints"),
   player,
